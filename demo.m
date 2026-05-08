@@ -5,14 +5,14 @@ addpath(genpath('patchImages'));
 addpath(genpath(pwd));
 
 
-imageFolderPath = 'D:\generate_distort_images\patchImages';
+imageFolderPath = 'patchImages';
 
 
 imageFiles = dir(fullfile(imageFolderPath, '*.jpg'));
 imageFiles = [imageFiles; dir(fullfile(imageFolderPath, '*.png'))];
 
 
-outerSavePath = fullfile('.', 'data_new/imcompressjpegImages'); 
+outerSavePath = fullfile('.', 'imcompressjpegImages'); 
 
 
 if ~isfolder(outerSavePath)
