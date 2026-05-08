@@ -46,19 +46,16 @@ distort_I = mapmm(distort_I);
 
 end
 
-% 高斯模糊
 function img = imblurgauss(im, sigma)
 img = imgaussfilt(im, sigma);
 end
 
-% 运动模糊
 function img = imblurmotion(im, len)
 theta = 0;
 PSF = fspecial('motion', len, theta);
 img = deconvblind(im, PSF);
 end
 
-% 饱和度
 function img_out = imsaturate(img_in, level)
 img = double(img_in);
 if level < 1
@@ -69,7 +66,6 @@ img(img > 255) = 255;
 img_out = uint8(img);
 end
 
-% JP2K压缩
 function img = imcompressjp2k(im, level)
 temp = 'temp.jp2';
 imwrite(im, temp, 'Mode', 'lossy', 'CompressionRatio', level);
@@ -77,7 +73,6 @@ img = imread(temp);
 delete(temp);
 end
 
-% JPEG压缩
 function img = imcompressjpeg(im, q)
 temp = 'temp.jpg';
 imwrite(im, temp, 'Quality', q);
@@ -85,17 +80,14 @@ img = imread(temp);
 delete(temp);
 end
 
-% 高斯噪声
 function img = imnoisegauss(im, level)
 img = imnoise(im, 'gaussian', 0, level);
 end
 
-% 对比度
 function img = imcontrastc(im, level)
 img = imadjust(im, [], [], level);
 end
 
-% 重影失真
 function distort_I = imghost_main(im, alpha)
 img = double(im);
 [h, w, ~] = size(img);
