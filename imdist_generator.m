@@ -15,7 +15,6 @@ switch dist_type
         levels = [0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5,25.0, 27.5, 30.0, 32.5, 35.0, 37.5, 40.0, 42.5, 45.0, 47.5,50.0, 52.5, 55.0, 57.5, 60.0, 62.5, 65.0, 67.5, 70.0, 72.5];
         level = interp1(1:length(levels), levels, dist_level, 'linear', 'extrap');
         distort_I = imblurmotion(im, levels(dist_level));
-    
     case 3
         levels = [0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 14.5, 15.0, 15.5, 16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 19.5];
         level = interp1(1:length(levels), levels, dist_level, 'linear', 'extrap');
@@ -44,3 +43,66 @@ switch dist_type
         error('Unknown distortion type!')
 end
 distort_I = mapmm(distort_I);
+
+end
+
+% 高斯模糊
+function img = imblurgauss(im, sigma)
+img = imgaussfilt(im, sigma);
+end
+
+% 运动模糊
+function img = imblurmotion(im, len)
+theta = 0;
+PSF = fspecial('motion', len, theta);
+img = deconvblind(im, PSF);
+end
+
+% 饱和度
+function img_out = imsaturate(img_in, level)
+img = double(img_in);
+if level < 1
+    level = 1;
+end
+img = img * level;
+img(img > 255) = 255;
+img_out = uint8(img);
+end
+
+% JP2K压缩
+function img = imcompressjp2k(im, level)
+temp = 'temp.jp2';
+imwrite(im, temp, 'Mode', 'lossy', 'CompressionRatio', level);
+img = imread(temp);
+delete(temp);
+end
+
+% JPEG压缩
+function img = imcompressjpeg(im, q)
+temp = 'temp.jpg';
+imwrite(im, temp, 'Quality', q);
+img = imread(temp);
+delete(temp);
+end
+
+% 高斯噪声
+function img = imnoisegauss(im, level)
+img = imnoise(im, 'gaussian', 0, level);
+end
+
+% 对比度
+function img = imcontrastc(im, level)
+img = imadjust(im, [], [], level);
+end
+
+% 重影失真
+function distort_I = imghost_main(im, alpha)
+img = double(im);
+[h, w, ~] = size(img);
+dx = round(w * 0.02);
+dy = round(h * 0.02);
+img_shift = zeros(size(img), 'like', img);
+img_shift(1+dy:end, 1+dx:end, :) = img(1:end-dy, 1:end-dx, :);
+distort_I = (1 - alpha) * img + alpha * img_shift;
+distort_I = uint8(round(distort_I));
+end
