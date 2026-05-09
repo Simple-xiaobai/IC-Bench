@@ -18,8 +18,8 @@ outerSavePath = fullfile('.', 'imcompressjpegImages');
 if ~isfolder(outerSavePath)
     mkdir(outerSavePath);
 end
-type =10;
-dist_type = ["blurgauss", "blurlens", "blurmotion", "colordiffuse", "colorshift", "colorquantize", "colorsaturate", "saturate", "compressjptk", "compressjpeg", "noisegauss", "contrastc"];
+type =1;%blurgauss
+dist_type = ["blurgauss", "colorsaturate",  "compressjptk", "compressjpeg", "noisegauss", "contrastc"];
 totallevel=40;
 
 for k = 1:length(imageFiles)
