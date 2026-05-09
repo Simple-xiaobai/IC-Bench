@@ -38,7 +38,7 @@ switch dist_type
     case 8
         levels = linspace(0, 1, 40);
         level = interp1(1:length(levels), levels, dist_level, 'linear', 'extrap');
-        distort_I = imghost_main(im, level);
+        distort_I = imghost(im, level);
     otherwise
         error('Unknown distortion type!')
 end
