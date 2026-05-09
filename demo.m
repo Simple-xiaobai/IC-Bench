@@ -19,7 +19,7 @@ if ~isfolder(outerSavePath)
     mkdir(outerSavePath);
 end
 type =1;%blurgauss
-dist_type = ["blurgauss", "colorsaturate",  "compressjptk", "compressjpeg", "noisegauss", "contrastc"];
+dist_type = ["blurgauss", "colorsaturate",  "compressjptk", "compressjpeg", "noisegauss", "contrastc","ghost"];
 totallevel=40;
 
 for k = 1:length(imageFiles)
