@@ -1,4 +1,4 @@
-function generate_imghost_all()
+function imghost()
     folderPath = 'patchImages';  
 
     
