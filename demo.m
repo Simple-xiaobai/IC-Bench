@@ -12,13 +12,13 @@ imageFiles = dir(fullfile(imageFolderPath, '*.jpg'));
 imageFiles = [imageFiles; dir(fullfile(imageFolderPath, '*.png'))];
 
 
-outerSavePath = fullfile('.', 'imcompressjpegImages'); 
+outerSavePath = fullfile('.', 'imblurgaussImages'); 
 
 
 if ~isfolder(outerSavePath)
     mkdir(outerSavePath);
 end
-type =4;%blurgauss
+type =1;%blurgauss
 dist_type = ["blurgauss", "colorsaturate",  "compressjptk", "compressjpeg", "noisegauss", "contrastc","ghost"];
 totallevel=40;
 
